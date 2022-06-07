@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
 import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
+import 'package:flutter_basics/ui/home/model/interview_model.dart';
 import 'package:flutter_basics/ui/home/model/toatal_employee_model.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
+import 'package:flutter_basics/ui_widgets/home_interview_item.dart';
 import 'package:flutter_basics/utils/app_color.dart';
 import 'package:flutter_basics/utils/app_string.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -28,6 +30,84 @@ class _HomePageState extends State<HomePage> {
   final List<TotalEmployeeModel> totalEmployeeData = [
     TotalEmployeeModel('Man', 64, Colors.blue),
     TotalEmployeeModel('Woman', 36, Colors.pink),
+  ];
+
+  // final List<InterviewModel> interviewData = [
+  //   InterviewModel(
+  //       name: 'Natelie Gibson',
+  //       avatarUrl: AppString.dummyImgUrl4,
+  //       isMale: false,
+  //       role: "UI / UX",
+  //       timing: "12:00 - 13:00"),
+  //   InterviewModel(
+  //       name: 'James Willey',
+  //       avatarUrl: AppString.dummyImgUrl1,
+  //       isMale: false,
+  //       role: "Flutter Developer",
+  //       timing: "12:00 - 13:00"),
+  //   InterviewModel(
+  //       name: 'Mark Welsmon',
+  //       avatarUrl: AppString.dummyImgUrl2,
+  //       isMale: false,
+  //       role: "Backend Developer",
+  //       timing: "12:00 - 13:00"),
+  //   InterviewModel(
+  //       name: 'Lee Chan',
+  //       avatarUrl: AppString.dummyImgUrl3,
+  //       isMale: false,
+  //       role: "Project Manager",
+  //       timing: "12:00 - 13:00"),
+  //   InterviewModel(
+  //       name: 'Meave Willey',
+  //       avatarUrl: AppString.dummyImgUrl5,
+  //       isMale: false,
+  //       role: "HR Manager",
+  //       timing: "12:00 - 13:00"),
+  //   InterviewModel(
+  //       name: 'Natelie Portman',
+  //       avatarUrl: AppString.dummyImgUrl6,
+  //       isMale: false,
+  //       role: "Delievery Lead",
+  //       timing: "12:00 - 13:00"),
+  // ];
+
+  final List<InterviewModel> interviewData = [
+    InterviewModel(
+        name: 'Natelie Gibson',
+        avatarUrl: AppString.robotDummyImgUrl,
+        isMale: false,
+        role: "UI / UX",
+        timing: "12:00 - 13:00"),
+    InterviewModel(
+        name: 'James Willey',
+        avatarUrl: AppString.robotDummyImgUrl,
+        isMale: false,
+        role: "Flutter Developer",
+        timing: "12:00 - 13:00"),
+    InterviewModel(
+        name: 'Mark Welsmon',
+        avatarUrl: AppString.robotDummyImgUrl,
+        isMale: false,
+        role: "Backend Developer",
+        timing: "12:00 - 13:00"),
+    InterviewModel(
+        name: 'Lee Chan',
+        avatarUrl: AppString.robotDummyImgUrl,
+        isMale: false,
+        role: "Project Manager",
+        timing: "12:00 - 13:00"),
+    InterviewModel(
+        name: 'Meave Willey',
+        avatarUrl: AppString.robotDummyImgUrl,
+        isMale: false,
+        role: "HR Manager",
+        timing: "12:00 - 13:00"),
+    InterviewModel(
+        name: 'Natelie Portman',
+        avatarUrl: AppString.robotDummyImgUrl,
+        isMale: false,
+        role: "Delievery Lead",
+        timing: "12:00 - 13:00"),
   ];
 
   final List<EmployeeAvailabilityModel> employeeAvailabilityData = [
@@ -60,6 +140,10 @@ class _HomePageState extends State<HomePage> {
               height: 20.0,
             ),
             totalEmployees(),
+            SizedBox(
+              height: 20.0,
+            ),
+            upcomingInterviews(),
             SizedBox(
               height: 20.0,
             ),
@@ -119,6 +203,7 @@ class _HomePageState extends State<HomePage> {
             height: 230.0,
             child: GridView.builder(
                 shrinkWrap: true,
+                physics: ScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
                     childAspectRatio: 3 / 2,
@@ -239,4 +324,34 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       );
+
+  upcomingInterviews() => AppCard(
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 12.0,
+          ),
+          Text(
+            AppString.upcomingInterviews,
+            style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
+          ),
+          SizedBox(
+            height: 12.0,
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            itemCount: interviewData.length,
+            itemBuilder: (context, index) =>
+                HomeInterviewItem(item: interviewData[index]),
+            separatorBuilder: (context, index) => Divider(),
+          ),
+          SizedBox(
+            height: 12.0,
+          ),
+        ],
+      ),
+      onTap: () {});
 }
