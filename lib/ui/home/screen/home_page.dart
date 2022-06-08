@@ -8,7 +8,9 @@ import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
 import 'package:flutter_basics/ui_widgets/appbar/appbar.dart';
 import 'package:flutter_basics/ui_widgets/home_interview_item.dart';
 import 'package:flutter_basics/utils/app_color.dart';
+import 'package:flutter_basics/utils/app_font_size.dart';
 import 'package:flutter_basics/utils/app_string.dart';
+import 'package:flutter_basics/utils/size_config.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../model/top_performer_model.dart';
@@ -120,6 +122,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    AppFontSize.init();
     return Scaffold(
         backgroundColor: AppColor.aquaSpring,
         appBar: getAppBar(),
