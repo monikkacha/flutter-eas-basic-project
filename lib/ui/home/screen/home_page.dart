@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/ui/add_interview/add_interview.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
 import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
 import 'package:flutter_basics/ui/home/model/interview_model.dart';
 import 'package:flutter_basics/ui/home/model/toatal_employee_model.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
+import 'package:flutter_basics/ui_widgets/appbar/appbar.dart';
 import 'package:flutter_basics/ui_widgets/home_interview_item.dart';
 import 'package:flutter_basics/utils/app_color.dart';
 import 'package:flutter_basics/utils/app_string.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../model/top_performer_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
 
   final List<ChartDataModel> chartData = [
     ChartDataModel(2010, 35),
@@ -31,45 +35,6 @@ class _HomePageState extends State<HomePage> {
     TotalEmployeeModel('Man', 64, Colors.blue),
     TotalEmployeeModel('Woman', 36, Colors.pink),
   ];
-
-  // final List<InterviewModel> interviewData = [
-  //   InterviewModel(
-  //       name: 'Natelie Gibson',
-  //       avatarUrl: AppString.dummyImgUrl4,
-  //       isMale: false,
-  //       role: "UI / UX",
-  //       timing: "12:00 - 13:00"),
-  //   InterviewModel(
-  //       name: 'James Willey',
-  //       avatarUrl: AppString.dummyImgUrl1,
-  //       isMale: false,
-  //       role: "Flutter Developer",
-  //       timing: "12:00 - 13:00"),
-  //   InterviewModel(
-  //       name: 'Mark Welsmon',
-  //       avatarUrl: AppString.dummyImgUrl2,
-  //       isMale: false,
-  //       role: "Backend Developer",
-  //       timing: "12:00 - 13:00"),
-  //   InterviewModel(
-  //       name: 'Lee Chan',
-  //       avatarUrl: AppString.dummyImgUrl3,
-  //       isMale: false,
-  //       role: "Project Manager",
-  //       timing: "12:00 - 13:00"),
-  //   InterviewModel(
-  //       name: 'Meave Willey',
-  //       avatarUrl: AppString.dummyImgUrl5,
-  //       isMale: false,
-  //       role: "HR Manager",
-  //       timing: "12:00 - 13:00"),
-  //   InterviewModel(
-  //       name: 'Natelie Portman',
-  //       avatarUrl: AppString.dummyImgUrl6,
-  //       isMale: false,
-  //       role: "Delievery Lead",
-  //       timing: "12:00 - 13:00"),
-  // ];
 
   final List<InterviewModel> interviewData = [
     InterviewModel(
@@ -110,6 +75,39 @@ class _HomePageState extends State<HomePage> {
         timing: "12:00 - 13:00"),
   ];
 
+  List<TopPerformerModel> topPerformerData = [
+    TopPerformerModel(
+        name: "Luke Short",
+        productivity: 95,
+        username: "lukes",
+        avatarUrl: AppString.dummyImgUrl1),
+    TopPerformerModel(
+        name: "James William",
+        productivity: 80,
+        username: "jameswii",
+        avatarUrl: AppString.dummyImgUrl2),
+    TopPerformerModel(
+        name: "Max Lopez",
+        productivity: 77,
+        username: "lopez22",
+        avatarUrl: AppString.dummyImgUrl1),
+    TopPerformerModel(
+        name: "Megan Heartly",
+        productivity: 77,
+        username: "heartlymeg",
+        avatarUrl: AppString.dummyImgUrl5),
+    TopPerformerModel(
+        name: "Naomi Scott",
+        productivity: 72,
+        username: "naomi332",
+        avatarUrl: AppString.dummyImgUrl5),
+    TopPerformerModel(
+        name: "Emma Watson",
+        productivity: 65,
+        username: "emmawat",
+        avatarUrl: AppString.dummyImgUrl6),
+  ];
+
   final List<EmployeeAvailabilityModel> employeeAvailabilityData = [
     EmployeeAvailabilityModel(
         Icons.task_alt_outlined, AppString.attendance, 400),
@@ -126,25 +124,29 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColor.aquaSpring,
         appBar: getAppBar(),
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             employeesInfo(),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             employeeAvailabilty(),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             totalEmployees(),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             upcomingInterviews(),
-            SizedBox(
+            const SizedBox(
+              height: 20.0,
+            ),
+            topPerformers(),
+            const SizedBox(
               height: 20.0,
             ),
           ],
@@ -153,14 +155,12 @@ class _HomePageState extends State<HomePage> {
 
   employeesInfo() => AppCard(
         onTap: () {},
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 8.0,
-            ),
-            Padding(
+            height12(),
+            const Padding(
               padding: EdgeInsets.only(left: 8.0),
               child: Text(
                 AppString.employInfo,
@@ -168,44 +168,38 @@ class _HomePageState extends State<HomePage> {
                     TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
               ),
             ),
-            SizedBox(
-              height: 8.0,
-            ),
+            height12(),
             Container(
                 height: 240.0,
                 child: SfCartesianChart(series: <ChartSeries>[
-                  // Renders line chart
                   LineSeries<ChartDataModel, int>(
                       dataSource: chartData,
                       xValueMapper: (ChartDataModel data, _) => data.x,
-                      yValueMapper: (ChartDataModel data, _) => data.y)
+                      yValueMapper: (ChartDataModel data, _) => data.y,
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: true))
                 ])),
           ],
         ),
       );
 
   employeeAvailabilty() => AppCard(
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 8.0,
-          ),
-          Text(
+          height12(),
+          const Text(
             AppString.employAvailability,
             style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
           ),
-          SizedBox(
-            height: 8.0,
-          ),
+          height12(),
           Container(
-            height: 230.0,
             child: GridView.builder(
                 shrinkWrap: true,
-                physics: ScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
+                physics: const ScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
                     childAspectRatio: 3 / 2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
@@ -214,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                   EmployeeAvailabilityModel item =
                       employeeAvailabilityData[index];
                   return AppCard(
-                    padding: EdgeInsets.only(left: 12.0, top: 12.0),
+                    padding: const EdgeInsets.only(left: 12.0, top: 12.0),
                     onTap: () {},
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,82 +216,40 @@ class _HomePageState extends State<HomePage> {
                         Icon(item.icon),
                         Text(
                           item.label,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600, letterSpacing: 0.3),
                         ),
                         Text(
                           item.count.toString(),
-                          style: TextStyle(fontSize: 12.0),
+                          style: const TextStyle(fontSize: 12.0),
                         )
                       ],
                     ),
                   );
                 }),
           ),
+          height12(),
         ],
       ),
       onTap: () {});
 
-  PreferredSize getAppBar() => PreferredSize(
-        preferredSize: Size.fromHeight(60), // Set this height
-        child: Container(
-          padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 40.0),
-          color: AppColor.aquaSpring,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(Icons.menu_outlined),
-              SizedBox(width: 10),
-              Expanded(
-                  child: Container(
-                padding: EdgeInsets.only(right: 20.0),
-                height: 48.0,
-                decoration: BoxDecoration(
-                  color: AppColor.gallery,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(
-                              left: 15, bottom: 11, top: 11, right: 15),
-                          hintText: AppString.searchHere),
-                    )),
-                    Icon(Icons.search)
-                  ],
-                ),
-              )),
-              SizedBox(width: 10),
-              Icon(Icons.account_circle_outlined),
-            ],
-          ),
-        ),
-      );
+
 
   totalEmployees() => AppCard(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         onTap: () {},
         child: Column(
           children: [
-            SizedBox(
-              height: 12.0,
-            ),
+            height12(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   AppString.totalEmployees,
                   style: TextStyle(
                       fontWeight: FontWeight.w600, letterSpacing: 0.3),
                 ),
-                Text(
+                const Text(
                   "100",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
@@ -319,39 +271,192 @@ class _HomePageState extends State<HomePage> {
                               data.color,
                           xValueMapper: (TotalEmployeeModel data, _) => data.x,
                           yValueMapper: (TotalEmployeeModel data, _) => data.y,
-                          dataLabelSettings: DataLabelSettings(isVisible: true))
+                          dataLabelSettings:
+                              const DataLabelSettings(isVisible: true))
                     ])),
           ],
         ),
       );
 
   upcomingInterviews() => AppCard(
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 12.0,
+          height12(),
+          Row(
+            children: [
+              const Text(
+                AppString.upcomingInterviews,
+                style:
+                    TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
+              ),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddInterview()));
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.add,
+                      color: AppColor.pickledBluewood,
+                    ),
+                    const Text(
+                      AppString.add,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, letterSpacing: 0.3),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          Text(
-            AppString.upcomingInterviews,
-            style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
-          ),
-          SizedBox(
-            height: 12.0,
-          ),
+          height12(),
           ListView.separated(
             shrinkWrap: true,
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             itemCount: interviewData.length,
             itemBuilder: (context, index) =>
                 HomeInterviewItem(item: interviewData[index]),
-            separatorBuilder: (context, index) => Divider(),
+            separatorBuilder: (context, index) => const Divider(),
           ),
-          SizedBox(
-            height: 12.0,
-          ),
+          height12(),
         ],
       ),
       onTap: () {});
+
+  topPerformers() => AppCard(
+        backgroundColor: AppColor.vanillaIce,
+        borderColor: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            height12(),
+            const Text(
+              AppString.topPerformers,
+              style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
+            ),
+            height12(),
+            const Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                      text: 'You have 140 ', style: TextStyle(fontSize: 12.0)),
+                  TextSpan(
+                    text: 'influencers',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
+                  ),
+                  TextSpan(
+                      text: ' in your company.',
+                      style: TextStyle(fontSize: 12.0)),
+                ],
+              ),
+            ),
+            height12(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    const Text(
+                      "350",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const Text(
+                      "New Task",
+                      style: TextStyle(fontSize: 10.0),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      "130",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const Text(
+                      "Task Completed",
+                      style: TextStyle(fontSize: 10.0),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            height12(),
+            GridView.builder(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1 / 1.3,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemCount: topPerformerData.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  TopPerformerModel item = topPerformerData[index];
+                  return AppCard(
+                    isShadow: true,
+                    borderColor: Colors.transparent,
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        height12(),
+                        CircleAvatar(
+                          backgroundColor: AppColor.bombay,
+                          radius: 28.0,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 27.0,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: NetworkImage(item.avatarUrl),
+                              radius: 24.0,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          item.name,
+                          style: const TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.3),
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "@${item.username}",
+                          style: const TextStyle(
+                              fontSize: 12.0,
+                              color: AppColor.bombay,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        height12(),
+                        Text(
+                          "${item.productivity} %",
+                          style: const TextStyle(
+                              fontSize: 30.0,
+                              color: AppColor.pickledBluewood,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    ),
+                  );
+                }),
+            height12(),
+          ],
+        ),
+      );
+
+  height12() => const SizedBox(
+        height: 12.0,
+      );
 }

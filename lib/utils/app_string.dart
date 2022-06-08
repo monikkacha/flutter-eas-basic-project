@@ -8,6 +8,8 @@ class AppString {
   static const leaveApply = "Leave Apply";
   static const totalEmployees = "Total Employees";
   static const upcomingInterviews = "Upcoming Interviews";
+  static const topPerformers = "Top Performers";
+  static const add = "ADD";
 
   static const robotDummyImgUrl = "https://icons.iconarchive.com/icons/diversity-avatars/avatars/1024/robot-01-icon.png";
 
