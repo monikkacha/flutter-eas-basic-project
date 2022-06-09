@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_basics/ui/home/screen/home_page.dart';
+import 'package:flutter_basics/utils/app_color.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -15,7 +17,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: AppColor.eastBay
+        ),
+        scaffoldBackgroundColor: AppColor.aquaSpring,
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ),

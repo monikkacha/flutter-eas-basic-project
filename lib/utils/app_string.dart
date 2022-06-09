@@ -10,6 +10,24 @@ class AppString {
   static const upcomingInterviews = "Upcoming Interviews";
   static const topPerformers = "Top Performers";
   static const add = "ADD";
+  static const addInterview = "Add Interview";
+  static const name = "Name";
+  static const avatarUrl = "Avatar Url";
+  static const role = "Role";
+  static const time = "Time";
+  static const startTime = "Start Time";
+  static const endTime = "End Time";
+  static const gender = "Gender";
+  static const productivity = "Productivity";
+  static const scheduleInterview = "Schedule Interview";
+  static const allFieldsRequired = "*-- all fields are required --*";
+  static const male = "Male";
+  static const female = "Female";
+  static const edit = "Edit";
+  static const delete = "Delete";
+
+  static const nameHint = "eg. John Doe";
+  static const avatarUrlHint = "eg. https://xyz.com/my-avtar.png";
 
   static const robotDummyImgUrl = "https://icons.iconarchive.com/icons/diversity-avatars/avatars/1024/robot-01-icon.png";
 

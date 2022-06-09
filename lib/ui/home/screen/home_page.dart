@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/ui/add_interview/add_interview.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_basics/ui/add_interview/add_interview_page.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
 import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
 import 'package:flutter_basics/ui/home/model/interview_model.dart';
 import 'package:flutter_basics/ui/home/model/toatal_employee_model.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
-import 'package:flutter_basics/ui_widgets/appbar/appbar.dart';
-import 'package:flutter_basics/ui_widgets/home_interview_item.dart';
+import 'package:flutter_basics/ui_widgets/appbar/common_app_bar.dart';
+import 'package:flutter_basics/ui_widgets/home_interview_item/home_interview_item.dart';
 import 'package:flutter_basics/utils/app_color.dart';
 import 'package:flutter_basics/utils/app_font_size.dart';
 import 'package:flutter_basics/utils/app_string.dart';
 import 'package:flutter_basics/utils/size_config.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../ui_widgets/app_drawer/app_drawer.dart';
 import '../model/top_performer_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
 
   final List<ChartDataModel> chartData = [
     ChartDataModel(2010, 35),
@@ -121,12 +124,21 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColor.eastBay,
+    ));
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     AppFontSize.init();
     return Scaffold(
+        key: _key,
         backgroundColor: AppColor.aquaSpring,
         appBar: getAppBar(),
+        drawer: AppDrawer(),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           children: [
@@ -156,6 +168,44 @@ class _HomePageState extends State<HomePage> {
           ],
         ));
   }
+
+  getAppBar() => commonAppBar(
+      backgroundColor: AppColor.eastBay,
+      bottomBorderColor: Colors.transparent,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+              onTap: () => _key.currentState!.openDrawer(),
+              child: const Icon(
+                Icons.menu_outlined,
+                color: Colors.white,
+              )),
+          const SizedBox(width: 10),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(right: 20.0),
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColor.gallery,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.search),
+                  border: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 10),
+                  hintText: AppString.searchHere),
+            ),
+          )),
+          const SizedBox(width: 10),
+          const Icon(
+            Icons.account_circle_outlined,
+            color: Colors.white,
+          ),
+        ],
+      ));
 
   employeesInfo() => AppCard(
         onTap: () {},
@@ -202,8 +252,8 @@ class _HomePageState extends State<HomePage> {
             child: GridView.builder(
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: SizeConfig.isTabletDevice ? 4 : 2,
                     childAspectRatio: 3 / 2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
@@ -225,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           item.count.toString(),
-                          style: const TextStyle(fontSize: 12.0),
+                          style: TextStyle(fontSize: AppFontSize.value12),
                         )
                       ],
                     ),
@@ -237,10 +287,8 @@ class _HomePageState extends State<HomePage> {
       ),
       onTap: () {});
 
-
-
   totalEmployees() => AppCard(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        padding: EdgeInsets.symmetric(horizontal: AppFontSize.value12),
         onTap: () {},
         child: Column(
           children: [
@@ -248,17 +296,17 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   AppString.totalEmployees,
                   style: TextStyle(
                       fontWeight: FontWeight.w600, letterSpacing: 0.3),
                 ),
-                const Text(
+                Text(
                   "100",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.3,
-                      fontSize: 20.0),
+                      fontSize: AppFontSize.value20),
                 ),
               ],
             ),
@@ -283,7 +331,7 @@ class _HomePageState extends State<HomePage> {
       );
 
   upcomingInterviews() => AppCard(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      padding: EdgeInsets.symmetric(horizontal: AppFontSize.value12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -298,8 +346,10 @@ class _HomePageState extends State<HomePage> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddInterview()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddInterviewPage()));
                 },
                 child: Row(
                   children: [
@@ -334,7 +384,7 @@ class _HomePageState extends State<HomePage> {
   topPerformers() => AppCard(
         backgroundColor: AppColor.vanillaIce,
         borderColor: Colors.transparent,
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        padding: EdgeInsets.symmetric(horizontal: AppFontSize.value12),
         onTap: () {},
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,19 +395,21 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
             ),
             height12(),
-            const Text.rich(
+            Text.rich(
               TextSpan(
                 children: [
                   TextSpan(
-                      text: 'You have 140 ', style: TextStyle(fontSize: 12.0)),
+                      text: 'You have 140 ',
+                      style: TextStyle(fontSize: AppFontSize.value12)),
                   TextSpan(
                     text: 'influencers',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: AppFontSize.value12),
                   ),
                   TextSpan(
                       text: ' in your company.',
-                      style: TextStyle(fontSize: 12.0)),
+                      style: TextStyle(fontSize: AppFontSize.value12)),
                 ],
               ),
             ),
@@ -367,25 +419,29 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Column(
                   children: [
-                    const Text(
+                    Text(
                       "350",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: AppFontSize.value16),
                     ),
-                    const Text(
+                    Text(
                       "New Task",
-                      style: TextStyle(fontSize: 10.0),
+                      style: TextStyle(fontSize: AppFontSize.value10),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    const Text(
+                    Text(
                       "130",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: AppFontSize.value16),
                     ),
-                    const Text(
+                    Text(
                       "Task Completed",
-                      style: TextStyle(fontSize: 10.0),
+                      style: TextStyle(fontSize: AppFontSize.value10),
                     ),
                   ],
                 ),
@@ -395,9 +451,9 @@ class _HomePageState extends State<HomePage> {
             GridView.builder(
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.3,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: SizeConfig.isTabletDevice ? 3 : 2,
+                    childAspectRatio: SizeConfig.isTabletDevice ? 1 : 1 / 1.3,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemCount: topPerformerData.length,
@@ -423,13 +479,11 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 6.0,
-                        ),
+                        height6(),
                         Text(
                           item.name,
-                          style: const TextStyle(
-                              fontSize: 14.0,
+                          style: TextStyle(
+                              fontSize: AppFontSize.value14,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 0.3),
                         ),
@@ -438,16 +492,16 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           "@${item.username}",
-                          style: const TextStyle(
-                              fontSize: 12.0,
-                              color: AppColor.bombay,
+                          style: TextStyle(
+                              fontSize: AppFontSize.value12,
+                              color: AppColor.eastBay,
                               fontWeight: FontWeight.w600),
                         ),
                         height12(),
                         Text(
                           "${item.productivity} %",
-                          style: const TextStyle(
-                              fontSize: 30.0,
+                          style: TextStyle(
+                              fontSize: AppFontSize.value30,
                               color: AppColor.pickledBluewood,
                               fontWeight: FontWeight.w600),
                         )
@@ -458,9 +512,5 @@ class _HomePageState extends State<HomePage> {
             height12(),
           ],
         ),
-      );
-
-  height12() => const SizedBox(
-        height: 12.0,
       );
 }
