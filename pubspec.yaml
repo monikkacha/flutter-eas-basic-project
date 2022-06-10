@@ -37,6 +37,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.1.58+1
   google_fonts: ^3.0.1
   logging: ^1.0.2
+  avatar_stack: ^1.1.0
+
 
 dev_dependencies:
   flutter_test:

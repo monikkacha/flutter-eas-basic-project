@@ -1,3 +1,4 @@
+import 'package:avatar_stack/avatar_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_basics/ui/add_interview/add_interview_form.dart';
@@ -37,6 +38,14 @@ class _HomePageState extends State<HomePage> {
     ChartDataModel(2013, 32),
     ChartDataModel(2014, 40)
   ];
+  final List<String> avatarList = [
+    AppString.dummyImgUrl1,
+    AppString.dummyImgUrl2,
+    AppString.dummyImgUrl3,
+    AppString.dummyImgUrl4,
+    AppString.dummyImgUrl5,
+    AppString.dummyImgUrl6,
+  ];
 
   final List<TotalEmployeeModel> totalEmployeeData = [
     TotalEmployeeModel('Man', 64, Colors.blue),
@@ -46,37 +55,37 @@ class _HomePageState extends State<HomePage> {
   final List<InterviewModel> interviewData = [
     InterviewModel(
         name: 'Natelie Gibson',
-        avatarUrl: AppString.robotDummyImgUrl,
+        avatarUrl: AppString.dummyImgUrl1,
         isMale: false,
         role: "UI / UX",
         timing: "12:00 - 13:00"),
     InterviewModel(
         name: 'James Willey',
-        avatarUrl: AppString.robotDummyImgUrl,
+        avatarUrl: AppString.dummyImgUrl2,
         isMale: false,
         role: "Flutter Developer",
         timing: "12:00 - 13:00"),
     InterviewModel(
         name: 'Mark Welsmon',
-        avatarUrl: AppString.robotDummyImgUrl,
+        avatarUrl: AppString.dummyImgUrl3,
         isMale: false,
         role: "Backend Developer",
         timing: "12:00 - 13:00"),
     InterviewModel(
         name: 'Lee Chan',
-        avatarUrl: AppString.robotDummyImgUrl,
+        avatarUrl: AppString.dummyImgUrl5,
         isMale: false,
         role: "Project Manager",
         timing: "12:00 - 13:00"),
     InterviewModel(
         name: 'Meave Willey',
-        avatarUrl: AppString.robotDummyImgUrl,
+        avatarUrl: AppString.dummyImgUrl6,
         isMale: false,
         role: "HR Manager",
         timing: "12:00 - 13:00"),
     InterviewModel(
         name: 'Natelie Portman',
-        avatarUrl: AppString.robotDummyImgUrl,
+        avatarUrl: AppString.dummyImgUrl4,
         isMale: false,
         role: "Delievery Lead",
         timing: "12:00 - 13:00"),
@@ -160,6 +169,8 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: AppFontSize.value20),
                 children: [
+                  webTopBar(),
+                  height10(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -202,6 +213,50 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
+  webTopBar() => Row(children: [
+        Expanded(child: searchBar() , flex: 3,),
+        Spacer(),
+        Expanded(child: Container() , flex: 1,),
+        Expanded(
+          child: AvatarStack(height: 50, avatars: [
+            for (var avatar in avatarList) NetworkImage(avatar),
+          ]),
+        ),
+        width12(),
+        Icon(Icons.notifications_rounded),
+        width12(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              "Dylan Hunter",
+              style: TextStyle(
+                  fontSize: AppFontSize.value10, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Admin Profile",
+              style: TextStyle(
+                fontSize: AppFontSize.value8,
+              ),
+            ),
+          ],
+        ),
+        width10(),
+        CircleAvatar(
+          backgroundColor: AppColor.bombay,
+          radius: 24.0,
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
+            radius: 22.0,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(AppString.dummyImgUrl2),
+              radius: 20.0,
+            ),
+          ),
+        ),
+      ]);
+
   mobileView() => Scaffold(
       key: _key,
       backgroundColor: AppColor.aquaSpring,
@@ -235,6 +290,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ));
+
+  searchBar() => Container(
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColor.gallery,
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        child: TextField(
+          decoration: InputDecoration(
+              suffixIcon: Icon(Icons.search),
+              border: InputBorder.none,
+              contentPadding:
+                  EdgeInsets.only(left: 15, bottom: 1, top: 8, right: 10),
+              hintText: AppString.searchHere),
+        ),
+      );
 
   getAppBar() => commonAppBar(
       backgroundColor: AppColor.eastBay,
@@ -596,12 +667,13 @@ class _HomePageState extends State<HomePage> {
   _showDesktopAddInterviewDialog() => showDialog(
       context: context,
       builder: (_) => Scaffold(
-        backgroundColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
             body: ListView(
-                padding: EdgeInsets.symmetric(horizontal: AppFontSize.value100 * 3),
+                padding:
+                    EdgeInsets.symmetric(horizontal: AppFontSize.value100 * 3),
                 children: [
                   height30(),
-                  AddInterviewForm(),
+                  AddInterviewForm(isDesktop: true,),
                 ]),
           ));
 }

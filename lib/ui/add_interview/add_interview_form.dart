@@ -8,7 +8,9 @@ import '../../utils/app_color.dart';
 import '../../utils/app_string.dart';
 
 class AddInterviewForm extends StatefulWidget {
-  const AddInterviewForm({Key? key}) : super(key: key);
+  bool isDesktop;
+
+  AddInterviewForm({this.isDesktop = false});
 
   @override
   State<AddInterviewForm> createState() => _AddInterviewFormState();
@@ -45,6 +47,17 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              widget.isDesktop
+                  ? Container(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    )
+                  : SizedBox(),
               Text(AppString.name),
               height8(),
               Container(
@@ -53,12 +66,14 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
                   color: AppColor.gallery,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 10, top: 10, right: 10),
-                      hintText: AppString.nameHint),
+                child: Center(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 10, top: 10, right: 10),
+                        hintText: AppString.nameHint),
+                  ),
                 ),
               ),
               height16(),
@@ -70,12 +85,14 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
                   color: AppColor.gallery,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 10, top: 10, right: 10),
-                      hintText: AppString.avatarUrlHint),
+                child: Center(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 10, top: 10, right: 10),
+                        hintText: AppString.avatarUrlHint),
+                  ),
                 ),
               ),
               height16(),
