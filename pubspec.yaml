@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^3.0.1
   logging: ^1.0.2
   avatar_stack: ^1.1.0
+  my_popup_menu: ^3.0.5
 
 
 dev_dependencies:

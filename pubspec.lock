@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -97,6 +104,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_platform_widgets:
+    dependency: transitive
+    description:
+      name: flutter_platform_widgets
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.20.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -158,6 +172,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
+  measure_size:
+    dependency: transitive
+    description:
+      name: measure_size
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   meta:
     dependency: transitive
     description:
@@ -165,6 +186,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  my_popup_menu:
+    dependency: "direct main"
+    description:
+      name: my_popup_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.5"
   path:
     dependency: transitive
     description:

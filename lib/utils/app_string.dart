@@ -25,6 +25,8 @@ class AppString {
   static const female = "Female";
   static const edit = "Edit";
   static const delete = "Delete";
+  static const topHiringSources = "Top Hiring Sources";
+  static const shortLoremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
 
   static const nameHint = "eg. John Doe";
   static const avatarUrlHint = "eg. https://xyz.com/my-avtar.png";

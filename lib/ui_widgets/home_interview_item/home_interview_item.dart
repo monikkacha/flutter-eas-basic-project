@@ -8,8 +8,9 @@ import 'package:flutter_basics/utils/size_config.dart';
 
 class HomeInterviewItem extends StatelessWidget {
   final InterviewModel item;
+  bool isDesktop;
 
-  HomeInterviewItem({required this.item});
+  HomeInterviewItem({required this.item, required this.isDesktop});
 
   List<InterviewPopupModel> interviewPopupMode = [
     InterviewPopupModel(icon: Icons.edit, label: AppString.edit),
@@ -36,12 +37,15 @@ class HomeInterviewItem extends StatelessWidget {
             children: [
               Text(
                 item.name,
-                style: TextStyle(fontSize: AppFontSize.value14),
+                style: TextStyle(
+                    fontSize:
+                        isDesktop ? AppFontSize.value10 : AppFontSize.value14),
               ),
               Text(
                 item.role,
                 style: TextStyle(
-                    fontSize: AppFontSize.value10,
+                    fontSize:
+                        isDesktop ? AppFontSize.value8 : AppFontSize.value10,
                     color: AppColor.bombay,
                     fontWeight: FontWeight.bold),
               ),

@@ -6,6 +6,7 @@ import 'package:flutter_basics/ui/add_interview/add_interview_page.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
 import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
 import 'package:flutter_basics/ui/home/model/interview_model.dart';
+import 'package:flutter_basics/ui/home/model/stacked_column_model.dart';
 import 'package:flutter_basics/ui/home/model/toatal_employee_model.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
 import 'package:flutter_basics/ui_widgets/appbar/common_app_bar.dart';
@@ -15,9 +16,11 @@ import 'package:flutter_basics/utils/app_color.dart';
 import 'package:flutter_basics/utils/app_font_size.dart';
 import 'package:flutter_basics/utils/app_string.dart';
 import 'package:flutter_basics/utils/size_config.dart';
+import 'package:my_popup_menu/my_popup_menu.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../ui_widgets/app_drawer/app_drawer.dart';
+import '../model/notification_model.dart';
 import '../model/top_performer_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,6 +48,28 @@ class _HomePageState extends State<HomePage> {
     AppString.dummyImgUrl4,
     AppString.dummyImgUrl5,
     AppString.dummyImgUrl6,
+  ];
+
+  final List<NotificationModel> notificationData = [
+    NotificationModel(
+        notification:
+            "Building Blocks of Life Discovered on Asteroid Located 200 Million Miles Away From Earth",
+        ago: "5 Minutes ago"),
+    NotificationModel(
+        notification:
+            "Rajya Sabha Polls: Cross-Voting Allegations Against 5 MLAs in 2 States",
+        ago: "10 Minutes ago"),
+    NotificationModel(
+        notification: "Here's What Kriti Sanon Posted On 5 Years Of Raabta",
+        ago: "12 Minutes ago"),
+    NotificationModel(
+        notification:
+            "Guru Nanak Dev University CET: Application For BEd Admission 2022 Opens; Exam On July 24",
+        ago: "17 Minutes ago"),
+    NotificationModel(
+        notification:
+            "Rajiv Bajaj Had This To Say On Mushrooming Electric Vehicle Startups",
+        ago: "33 Minutes ago"),
   ];
 
   final List<TotalEmployeeModel> totalEmployeeData = [
@@ -124,6 +149,13 @@ class _HomePageState extends State<HomePage> {
         avatarUrl: AppString.dummyImgUrl6),
   ];
 
+  final List<StackedColumnModel> stackedColumModel = [
+    StackedColumnModel('China', "12", "10", "14", "20"),
+    StackedColumnModel('USA', "14", "11", "18", "23"),
+    StackedColumnModel('UK', "16", "10", "15", "20"),
+    StackedColumnModel('Brazil', "18", "16", "18", "24")
+  ];
+
   final List<EmployeeAvailabilityModel> employeeAvailabilityData = [
     EmployeeAvailabilityModel(
         Icons.task_alt_outlined, AppString.attendance, 400),
@@ -191,6 +223,8 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                               height20(),
+                              topHiringSources(),
+                              height20(),
                               topPerformers(isDesktop: true),
                             ],
                           )),
@@ -214,16 +248,47 @@ class _HomePageState extends State<HomePage> {
       );
 
   webTopBar() => Row(children: [
-        Expanded(child: searchBar() , flex: 3,),
-        Spacer(),
-        Expanded(child: Container() , flex: 1,),
         Expanded(
-          child: AvatarStack(height: 50, avatars: [
+          child: searchBar(),
+          flex: 3,
+        ),
+        Spacer(),
+        Expanded(
+          child: Container(),
+          flex: 1,
+        ),
+        Expanded(
+          child: AvatarStack(height: AppFontSize.value24, avatars: [
             for (var avatar in avatarList) NetworkImage(avatar),
           ]),
         ),
         width12(),
-        Icon(Icons.notifications_rounded),
+        MyPopupIconButton(
+          isSelected: true,
+          menuContent: Container(
+            width: 350.0,
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              itemCount: notificationData.length + 1,
+              itemBuilder: (_, index) => index == notificationData.length
+                  ? TextButton(onPressed: () {}, child: Text("SEE ALL"))
+                  : ListTile(
+                      title: Text(notificationData[index].notification),
+                      subtitle: Text(notificationData[index].ago),
+                    ),
+              separatorBuilder: (context, index) {
+                return Divider();
+              },
+            ),
+          ),
+          icon: Icon(
+            Icons.notifications_rounded,
+          ),
+          notSelectedIcon: Icon(
+            Icons.notifications_rounded,
+          ),
+        ),
         width12(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -265,29 +330,19 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         children: [
-          const SizedBox(
-            height: 20.0,
-          ),
+          height20(),
           employeesInfo(),
-          const SizedBox(
-            height: 20.0,
-          ),
+          height20(),
           employeeAvailabilty(),
-          const SizedBox(
-            height: 20.0,
-          ),
+          height20(),
           totalEmployees(),
-          const SizedBox(
-            height: 20.0,
-          ),
+          height20(),
+          topHiringSources(),
+          height20(),
           upcomingInterviews(),
-          const SizedBox(
-            height: 20.0,
-          ),
+          height20(),
           topPerformers(),
-          const SizedBox(
-            height: 20.0,
-          ),
+          height20(),
         ],
       ));
 
@@ -371,6 +426,53 @@ class _HomePageState extends State<HomePage> {
                       dataLabelSettings:
                           const DataLabelSettings(isVisible: true))
                 ])),
+          ],
+        ),
+      );
+
+  topHiringSources() => AppCard(
+        onTap: () {},
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            height12(),
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Text(
+                AppString.topHiringSources,
+                style:
+                    TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.3),
+              ),
+            ),
+            height12(),
+            SfCartesianChart(primaryXAxis: CategoryAxis(), series: <
+                ChartSeries>[
+              StackedColumnSeries<StackedColumnModel, String>(
+                  dataSource: stackedColumModel,
+                  xValueMapper: (StackedColumnModel data, _) => data.x,
+                  yValueMapper: (StackedColumnModel data, _) =>
+                      int.parse(data.y1),
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
+              StackedColumnSeries<StackedColumnModel, String>(
+                  dataSource: stackedColumModel,
+                  xValueMapper: (StackedColumnModel data, _) => data.x,
+                  yValueMapper: (StackedColumnModel data, _) =>
+                      int.parse(data.y2),
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
+              StackedColumnSeries<StackedColumnModel, String>(
+                  dataSource: stackedColumModel,
+                  xValueMapper: (StackedColumnModel data, _) => data.x,
+                  yValueMapper: (StackedColumnModel data, _) =>
+                      int.parse(data.y3),
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
+              StackedColumnSeries<StackedColumnModel, String>(
+                  dataSource: stackedColumModel,
+                  xValueMapper: (StackedColumnModel data, _) => data.x,
+                  yValueMapper: (StackedColumnModel data, _) =>
+                      int.parse(data.y4),
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
+            ]),
           ],
         ),
       );
@@ -518,8 +620,8 @@ class _HomePageState extends State<HomePage> {
             shrinkWrap: true,
             physics: const ScrollPhysics(),
             itemCount: interviewData.length,
-            itemBuilder: (context, index) =>
-                HomeInterviewItem(item: interviewData[index]),
+            itemBuilder: (context, index) => HomeInterviewItem(
+                item: interviewData[index], isDesktop: isDesktop),
             separatorBuilder: (context, index) => const Divider(),
           ),
           height12(),
@@ -600,9 +702,9 @@ class _HomePageState extends State<HomePage> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: SizeConfig.isTabletDevice ? 3 : 2,
                     childAspectRatio: isDesktop
-                        ? 1 / 1.5
+                        ? 1 / 1.3
                         : SizeConfig.isTabletDevice
-                            ? 1
+                            ? 1 / 1.1
                             : 1 / 1.3,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
@@ -633,7 +735,9 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           item.name,
                           style: TextStyle(
-                              fontSize: AppFontSize.value14,
+                              fontSize: isDesktop
+                                  ? AppFontSize.value12
+                                  : AppFontSize.value14,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 0.3),
                         ),
@@ -643,7 +747,9 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "@${item.username}",
                           style: TextStyle(
-                              fontSize: AppFontSize.value12,
+                              fontSize: isDesktop
+                                  ? AppFontSize.value10
+                                  : AppFontSize.value12,
                               color: AppColor.eastBay,
                               fontWeight: FontWeight.w600),
                         ),
@@ -651,7 +757,9 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "${item.productivity} %",
                           style: TextStyle(
-                              fontSize: AppFontSize.value30,
+                              fontSize: isDesktop
+                                  ? AppFontSize.value24
+                                  : AppFontSize.value30,
                               color: AppColor.pickledBluewood,
                               fontWeight: FontWeight.w600),
                         )
@@ -673,7 +781,9 @@ class _HomePageState extends State<HomePage> {
                     EdgeInsets.symmetric(horizontal: AppFontSize.value100 * 3),
                 children: [
                   height30(),
-                  AddInterviewForm(isDesktop: true,),
+                  AddInterviewForm(
+                    isDesktop: true,
+                  ),
                 ]),
           ));
 }
