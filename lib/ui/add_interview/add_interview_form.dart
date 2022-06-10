@@ -48,7 +48,7 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
               Text(AppString.name),
               height8(),
               Container(
-                height: AppFontSize.value40,
+                height: AppFontSize.value30,
                 decoration: BoxDecoration(
                   color: AppColor.gallery,
                   borderRadius: BorderRadius.circular(4.0),
@@ -65,7 +65,7 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
               Text(AppString.avatarUrl),
               height8(),
               Container(
-                height: AppFontSize.value40,
+                height: AppFontSize.value30,
                 decoration: BoxDecoration(
                   color: AppColor.gallery,
                   borderRadius: BorderRadius.circular(4.0),
@@ -83,25 +83,31 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
               height8(),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: AppFontSize.value12),
-                height: AppFontSize.value40,
+                height: AppFontSize.value30,
                 decoration: BoxDecoration(
                   color: AppColor.gallery,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
-                child: DropdownButton<String>(
-                  underline: SizedBox(),
-                  value: currentRole,
-                  isExpanded: true,
-                  items: roleArray.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    currentRole = newValue ?? roleArray[0];
-                    setState(() {});
-                  },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 6,
+                    top: 6,
+                  ),
+                  child: DropdownButton<String>(
+                    underline: SizedBox(),
+                    value: currentRole,
+                    isExpanded: true,
+                    items: roleArray.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      currentRole = newValue ?? roleArray[0];
+                      setState(() {});
+                    },
+                  ),
                 ),
               ),
               height16(),
@@ -208,38 +214,38 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
       );
 
   getGender() => Row(
-    children: [
-      Expanded(
-        child: ListTile(
-          leading: Radio(
-            fillColor: MaterialStateColor.resolveWith(
+        children: [
+          Expanded(
+            child: ListTile(
+              leading: Radio(
+                fillColor: MaterialStateColor.resolveWith(
                     (states) => AppColor.eastBay),
-            groupValue: defaultGender,
-            value: AppString.male,
-            onChanged: (newValue) {
-              defaultGender = newValue.toString();
-              setState(() {});
-            },
+                groupValue: defaultGender,
+                value: AppString.male,
+                onChanged: (newValue) {
+                  defaultGender = newValue.toString();
+                  setState(() {});
+                },
+              ),
+              title: Text(AppString.male),
+            ),
           ),
-          title: Text(AppString.male),
-        ),
-      ),
-      Expanded(
-        child: ListTile(
-          leading: Radio(
-            fillColor: MaterialStateColor.resolveWith(
+          Expanded(
+            child: ListTile(
+              leading: Radio(
+                fillColor: MaterialStateColor.resolveWith(
                     (states) => AppColor.eastBay),
-            focusColor: AppColor.eastBay,
-            groupValue: defaultGender,
-            value: AppString.female,
-            onChanged: (newValue) {
-              defaultGender = newValue.toString();
-              setState(() {});
-            },
+                focusColor: AppColor.eastBay,
+                groupValue: defaultGender,
+                value: AppString.female,
+                onChanged: (newValue) {
+                  defaultGender = newValue.toString();
+                  setState(() {});
+                },
+              ),
+              title: Text(AppString.female),
+            ),
           ),
-          title: Text(AppString.female),
-        ),
-      ),
-    ],
-  );
+        ],
+      );
 }
