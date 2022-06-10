@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_basics/utils/app_font_size.dart';
+import 'package:flutter_basics/utils/size_config.dart';
 
 import '../../global_model/drawer_menu_items/drawer_menu_items.dart';
 import '../../utils/app_color.dart';
 
 class AppDrawer extends StatefulWidget {
+  bool isDesktop;
+
+  AppDrawer({this.isDesktop = false});
+
   @override
   State<AppDrawer> createState() => _AppDrawerState();
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  double topRightRadius = AppFontSize.value36;
+  double bottomRightRadius = AppFontSize.value36;
+  double topLeftRadius = AppFontSize.value36;
+  double bottomLeftRadius = AppFontSize.value36;
+  double sideBarHorizontalPadding = AppFontSize.value20;
+
   List<DrawerMenuItem> drawerMenuItems = [
     DrawerMenuItem(
         headMenu: "Dashboard",
@@ -47,23 +58,41 @@ class _AppDrawerState extends State<AppDrawer> {
   ];
 
   @override
+  void initState() {
+    topRightRadius =
+        widget.isDesktop ? AppFontSize.value12 : AppFontSize.value36;
+    bottomRightRadius =
+        widget.isDesktop ? AppFontSize.value12 : AppFontSize.value36;
+    topLeftRadius = widget.isDesktop ? AppFontSize.value12 : 0.0;
+    bottomLeftRadius = widget.isDesktop ? AppFontSize.value12 : 0.0;
+    sideBarHorizontalPadding = widget.isDesktop ? AppFontSize.value20 : 0.0;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
-          topRight: Radius.circular(AppFontSize.value36),
-          bottomRight: Radius.circular(AppFontSize.value36)),
+        topRight: Radius.circular(topRightRadius),
+        bottomRight: Radius.circular(bottomRightRadius),
+        topLeft: Radius.circular(topLeftRadius),
+        bottomLeft: Radius.circular(bottomLeftRadius),
+      ),
       child: Drawer(
         backgroundColor: AppColor.eastBay,
         child: ListView(
           children: [
-            _buildPanel1(),
+            widget.isDesktop ? height20() : SizedBox(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: sideBarHorizontalPadding),
+              child: _buildPanel(),
+            )
           ],
         ),
       ),
     );
   }
 
-  _buildPanel1() {
+  _buildPanel() {
     return ListView.builder(
         physics: ScrollPhysics(),
         shrinkWrap: true,

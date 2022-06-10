@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_basics/ui/add_interview/add_interview_form.dart';
 import 'package:flutter_basics/ui/add_interview/add_interview_page.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
 import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_basics/ui/home/model/toatal_employee_model.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
 import 'package:flutter_basics/ui_widgets/appbar/common_app_bar.dart';
 import 'package:flutter_basics/ui_widgets/home_interview_item/home_interview_item.dart';
+import 'package:flutter_basics/ui_widgets/responsive/responsive.dart';
 import 'package:flutter_basics/utils/app_color.dart';
 import 'package:flutter_basics/utils/app_font_size.dart';
 import 'package:flutter_basics/utils/app_string.dart';
@@ -134,40 +136,105 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     AppFontSize.init();
-    return Scaffold(
-        key: _key,
-        backgroundColor: AppColor.aquaSpring,
-        appBar: getAppBar(),
-        drawer: AppDrawer(),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          children: [
-            const SizedBox(
-              height: 20.0,
-            ),
-            employeesInfo(),
-            const SizedBox(
-              height: 20.0,
-            ),
-            employeeAvailabilty(),
-            const SizedBox(
-              height: 20.0,
-            ),
-            totalEmployees(),
-            const SizedBox(
-              height: 20.0,
-            ),
-            upcomingInterviews(),
-            const SizedBox(
-              height: 20.0,
-            ),
-            topPerformers(),
-            const SizedBox(
-              height: 20.0,
-            ),
-          ],
-        ));
+    return Responsive(
+        mobile: mobileView(), tablet: mobileView(), desktop: desktopView());
   }
+
+  desktopView() => Scaffold(
+        body: Container(
+          padding: EdgeInsets.only(top: AppFontSize.value26),
+          child: Row(children: [
+            width24(),
+            // Drawer
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: AppFontSize.value40),
+                child: AppDrawer(
+                  isDesktop: true,
+                ),
+              ),
+              flex: 4,
+            ),
+            // Main Body
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: AppFontSize.value20),
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 6,
+                          child: Column(
+                            children: [
+                              employeesInfo(),
+                              height20(),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      child:
+                                          employeeAvailabilty(isDesktop: true)),
+                                  width12(),
+                                  Expanded(child: totalEmployees())
+                                ],
+                              ),
+                              height20(),
+                              topPerformers(isDesktop: true),
+                            ],
+                          )),
+                      width20(),
+                      Expanded(
+                          flex: 4,
+                          child: Column(
+                            children: [
+                              upcomingInterviews(isDesktop: true),
+                            ],
+                          ))
+                    ],
+                  ),
+                  height30(),
+                ],
+              ),
+              flex: 16,
+            ),
+          ]),
+        ),
+      );
+
+  mobileView() => Scaffold(
+      key: _key,
+      backgroundColor: AppColor.aquaSpring,
+      appBar: getAppBar(),
+      drawer: AppDrawer(),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        children: [
+          const SizedBox(
+            height: 20.0,
+          ),
+          employeesInfo(),
+          const SizedBox(
+            height: 20.0,
+          ),
+          employeeAvailabilty(),
+          const SizedBox(
+            height: 20.0,
+          ),
+          totalEmployees(),
+          const SizedBox(
+            height: 20.0,
+          ),
+          upcomingInterviews(),
+          const SizedBox(
+            height: 20.0,
+          ),
+          topPerformers(),
+          const SizedBox(
+            height: 20.0,
+          ),
+        ],
+      ));
 
   getAppBar() => commonAppBar(
       backgroundColor: AppColor.eastBay,
@@ -237,7 +304,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-  employeeAvailabilty() => AppCard(
+  employeeAvailabilty({isDesktop = false}) => AppCard(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,7 +320,11 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: SizeConfig.isTabletDevice ? 4 : 2,
+                    crossAxisCount: isDesktop
+                        ? 2
+                        : SizeConfig.isTabletDevice
+                            ? 4
+                            : 2,
                     childAspectRatio: 3 / 2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
@@ -330,7 +401,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-  upcomingInterviews() => AppCard(
+  upcomingInterviews({isDesktop = false}) => AppCard(
       padding: EdgeInsets.symmetric(horizontal: AppFontSize.value12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -346,10 +417,14 @@ class _HomePageState extends State<HomePage> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddInterviewPage()));
+                  if (isDesktop) {
+                    _showDesktopAddInterviewDialog();
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddInterviewPage()));
+                  }
                 },
                 child: Row(
                   children: [
@@ -381,7 +456,7 @@ class _HomePageState extends State<HomePage> {
       ),
       onTap: () {});
 
-  topPerformers() => AppCard(
+  topPerformers({isDesktop = false}) => AppCard(
         backgroundColor: AppColor.vanillaIce,
         borderColor: Colors.transparent,
         padding: EdgeInsets.symmetric(horizontal: AppFontSize.value12),
@@ -453,7 +528,11 @@ class _HomePageState extends State<HomePage> {
                 physics: const ScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: SizeConfig.isTabletDevice ? 3 : 2,
-                    childAspectRatio: SizeConfig.isTabletDevice ? 1 : 1 / 1.3,
+                    childAspectRatio: isDesktop
+                        ? 1 / 1.5
+                        : SizeConfig.isTabletDevice
+                            ? 1
+                            : 1 / 1.3,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemCount: topPerformerData.length,
@@ -513,4 +592,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       );
+
+  _showDesktopAddInterviewDialog() => showDialog(
+      context: context,
+      builder: (_) => Scaffold(
+        backgroundColor: Colors.transparent,
+            body: ListView(
+                padding: EdgeInsets.symmetric(horizontal: AppFontSize.value100 * 3),
+                children: [
+                  height30(),
+                  AddInterviewForm(),
+                ]),
+          ));
 }
