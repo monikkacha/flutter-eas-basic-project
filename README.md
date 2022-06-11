@@ -43,13 +43,8 @@ possibly utilizing most of the framework available tools and inbuilt librareys .
 
 ## 📱 Developed mobile design
 
-<img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.20.41.png?raw=true" height="300"><img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.20.50.png?raw=true" height="300">
+<img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.20.41.png?raw=true" height="300"> <img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.20.50.png?raw=true" height="300"> <img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.20.56.png?raw=true" height="300"> <img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.21.05.png?raw=true" height="300"> <img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.21.18.png?raw=true" height="300">
 
-<img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.20.56.png?raw=true" height="300">
-
-<img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.21.05.png?raw=true" height="300">
-
-<img src="https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Simulator%20Screen%20Shot%20-%20iPhone%2013%20-%202022-06-11%20at%2009.21.18.png?raw=true" height="300">
 
 ## 🕸 Developed web design
 
