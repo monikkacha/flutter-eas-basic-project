@@ -149,11 +149,19 @@ class _HomePageState extends State<HomePage> {
         avatarUrl: AppString.dummyImgUrl6),
   ];
 
-  final List<StackedColumnModel> stackedColumModel = [
-    StackedColumnModel('China', "12", "10", "14", "20"),
-    StackedColumnModel('USA', "14", "11", "18", "23"),
-    StackedColumnModel('UK', "16", "10", "15", "20"),
-    StackedColumnModel('Brazil', "18", "16", "18", "24")
+  final List<StackedColumnModel> stackedColumnModel = [
+    StackedColumnModel('Jan', "12", "10", "14", "20"),
+    StackedColumnModel('Feb', "14", "11", "18", "23"),
+    StackedColumnModel('Mar', "16", "10", "15", "20"),
+    StackedColumnModel('Apr', "20", "22", "18", "24"),
+    StackedColumnModel('May', "24", "1", "10", "25"),
+    StackedColumnModel('Jun', "28", "22", "35", "5"),
+    StackedColumnModel('Jul', "40", "1", "8", "14"),
+    StackedColumnModel('Aug', "30", "22", "12", "34"),
+    StackedColumnModel('Sep', "10", "6", "8", "29"),
+    StackedColumnModel('Oct', "20", "22", "24", "18"),
+    StackedColumnModel('Nov', "11", "22", "16", "10"),
+    StackedColumnModel('Dec', "30", "16", "18", "10"),
   ];
 
   final List<EmployeeAvailabilityModel> employeeAvailabilityData = [
@@ -272,10 +280,21 @@ class _HomePageState extends State<HomePage> {
               physics: ScrollPhysics(),
               itemCount: notificationData.length + 1,
               itemBuilder: (_, index) => index == notificationData.length
-                  ? TextButton(onPressed: () {}, child: Text("SEE ALL"))
+                  ? TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "MORE",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ))
                   : ListTile(
-                      title: Text(notificationData[index].notification),
-                      subtitle: Text(notificationData[index].ago),
+                      title: Text(
+                        notificationData[index].notification,
+                        style: TextStyle(
+                            fontSize: AppFontSize.value10,
+                            color: AppColor.eastBay),
+                      ),
+                      subtitle: Text(notificationData[index].ago,
+                          style: TextStyle(fontSize: AppFontSize.value8)),
                     ),
               separatorBuilder: (context, index) {
                 return Divider();
@@ -449,25 +468,25 @@ class _HomePageState extends State<HomePage> {
             SfCartesianChart(primaryXAxis: CategoryAxis(), series: <
                 ChartSeries>[
               StackedColumnSeries<StackedColumnModel, String>(
-                  dataSource: stackedColumModel,
+                  dataSource: stackedColumnModel,
                   xValueMapper: (StackedColumnModel data, _) => data.x,
                   yValueMapper: (StackedColumnModel data, _) =>
                       int.parse(data.y1),
                   dataLabelSettings: const DataLabelSettings(isVisible: true)),
               StackedColumnSeries<StackedColumnModel, String>(
-                  dataSource: stackedColumModel,
+                  dataSource: stackedColumnModel,
                   xValueMapper: (StackedColumnModel data, _) => data.x,
                   yValueMapper: (StackedColumnModel data, _) =>
                       int.parse(data.y2),
                   dataLabelSettings: const DataLabelSettings(isVisible: true)),
               StackedColumnSeries<StackedColumnModel, String>(
-                  dataSource: stackedColumModel,
+                  dataSource: stackedColumnModel,
                   xValueMapper: (StackedColumnModel data, _) => data.x,
                   yValueMapper: (StackedColumnModel data, _) =>
                       int.parse(data.y3),
                   dataLabelSettings: const DataLabelSettings(isVisible: true)),
               StackedColumnSeries<StackedColumnModel, String>(
-                  dataSource: stackedColumModel,
+                  dataSource: stackedColumnModel,
                   xValueMapper: (StackedColumnModel data, _) => data.x,
                   yValueMapper: (StackedColumnModel data, _) =>
                       int.parse(data.y4),
