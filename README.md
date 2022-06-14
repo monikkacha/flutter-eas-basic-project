@@ -36,7 +36,7 @@ possibly utilizing most of the framework available tools and inbuilt librareys .
 
 
 ## 🎨 Design reference
-[Themeforest ](https://github.com/user/repo/blob/branch/other_file.md)
+[Themeforest ](http://preview.themeforest.net/item/mytask-hr-project-management-admin-template/full_screen_preview/31974551?_ga=2.189534315.1157061072.1654496611-1037161149.1654496611)
 
 ![Themeforest](https://github.com/monikkacha/flutter-eas-basic-project/blob/master/blob/Screenshot%202022-06-11%20at%209.13.42%20AM.png?raw=true)
 
