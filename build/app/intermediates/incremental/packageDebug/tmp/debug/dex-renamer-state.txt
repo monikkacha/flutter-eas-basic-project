@@ -1,0 +1,4 @@
+#Fri Jun 10 16:13:47 IST 2022
+base.0=/Users/monikkacha/Documents/workplace/mobile/flutter_basics/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
