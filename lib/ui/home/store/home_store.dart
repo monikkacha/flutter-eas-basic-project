@@ -24,7 +24,7 @@ class HomeStore extends ChangeNotifier {
     if (interviewList.isEmpty) {
       _fillWithDummyData();
     } else {
-      this.interviewList.addAll(interviewList);
+      this.interviewList = interviewList;
       notifyListeners();
     }
   }

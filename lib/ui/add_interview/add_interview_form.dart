@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_basics/ui_widgets/app_button.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
 import 'package:flutter_basics/utils/app_font_size.dart';
+import 'package:flutter_basics/utils/global.dart';
 import 'package:flutter_basics/utils/size_config.dart';
 
 import '../../utils/app_color.dart';
@@ -17,9 +18,13 @@ class AddInterviewForm extends StatefulWidget {
 }
 
 class _AddInterviewFormState extends State<AddInterviewForm> {
-  TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay startTime = TimeOfDay.now();
+  TimeOfDay endTime = TimeOfDay.now();
   double _currentSliderValue = 20;
   String defaultGender = AppString.male;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController avatarController = TextEditingController();
 
   List<String> roleArray = [
     "Select a role",
@@ -68,6 +73,7 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
                 ),
                 child: Center(
                   child: TextField(
+                    controller: nameController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(
@@ -87,6 +93,7 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
                 ),
                 child: Center(
                   child: TextField(
+                    controller: avatarController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(
@@ -148,23 +155,27 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
               height8(),
               getGender(),
               height16(),
-              AppButton(onTap: () {}, text: AppString.scheduleInterview),
+              AppButton(
+                  onTap: () => scheduleInterview(),
+                  text: AppString.scheduleInterview),
             ],
           ),
         ),
         onTap: () {});
   }
 
-  _selectTime() async {
+  _selectTime(isStartTime) async {
     final TimeOfDay? timeOfDay = await showTimePicker(
       context: context,
-      initialTime: selectedTime,
+      initialTime: isStartTime ? startTime : endTime,
       initialEntryMode: TimePickerEntryMode.dial,
     );
-    if (timeOfDay != null && timeOfDay != selectedTime) {
-      setState(() {
-        selectedTime = timeOfDay;
-      });
+    if (timeOfDay != null && timeOfDay != startTime) {
+      if (isStartTime)
+        startTime = timeOfDay;
+      else
+        endTime = timeOfDay;
+      setState(() {});
     }
   }
 
@@ -176,7 +187,7 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(AppString.startTime),
             height8(),
-            _timeButton("${selectedTime.hour}:${selectedTime.minute}"),
+            _timeButton("${startTime.hour}:${startTime.minute}", true),
           ]),
         ),
         width12(),
@@ -185,15 +196,15 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(AppString.endTime),
             height8(),
-            _timeButton("${selectedTime.hour}:${selectedTime.minute}"),
+            _timeButton("${endTime.hour}:${endTime.minute}", false),
           ]),
         ),
       ],
     );
   }
 
-  _timeButton(time) => GestureDetector(
-        onTap: () => _selectTime(),
+  _timeButton(time, isStartTime) => GestureDetector(
+        onTap: () => _selectTime(isStartTime),
         child: Container(
           height: AppFontSize.value40,
           width: double.infinity,
@@ -265,4 +276,26 @@ class _AddInterviewFormState extends State<AddInterviewForm> {
           ),
         ],
       );
+
+  scheduleInterview() {
+    if (validateForm()) {
+      print('conditions got passed');
+    }
+  }
+
+  bool validateForm() {
+    String name = nameController.value.text;
+    String avatarUrl = avatarController.value.text;
+    if (name.isEmpty) {
+      showFloatSnackBar(context: context, text: AppString.fillName);
+      return false;
+    } else if (avatarUrl.isEmpty) {
+      showFloatSnackBar(context: context, text: AppString.fillAvatar);
+      return false;
+    } else if (currentRole == roleArray[0]) {
+      showFloatSnackBar(context: context, text: AppString.fillCurrentRole);
+      return false;
+    }
+    return true;
+  }
 }

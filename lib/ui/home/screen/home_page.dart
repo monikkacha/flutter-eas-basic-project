@@ -1,6 +1,7 @@
 import 'package:avatar_stack/avatar_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_basics/db/database_repository.dart';
 import 'package:flutter_basics/ui/add_interview/add_interview_form.dart';
 import 'package:flutter_basics/ui/add_interview/add_interview_page.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
@@ -78,45 +79,6 @@ class _HomePageState extends State<HomePage> {
   final List<TotalEmployeeModel> totalEmployeeData = [
     TotalEmployeeModel('Man', 64, Colors.blue),
     TotalEmployeeModel('Woman', 36, Colors.pink),
-  ];
-
-  final List<InterviewModel> interviewData = [
-    InterviewModel(
-        name: 'Natelie Gibson',
-        avatarUrl: AppString.dummyImgUrl1,
-        isMale: false,
-        role: "UI / UX",
-        timing: "12:00 - 13:00"),
-    InterviewModel(
-        name: 'James Willey',
-        avatarUrl: AppString.dummyImgUrl2,
-        isMale: false,
-        role: "Flutter Developer",
-        timing: "12:00 - 13:00"),
-    InterviewModel(
-        name: 'Mark Welsmon',
-        avatarUrl: AppString.dummyImgUrl3,
-        isMale: false,
-        role: "Backend Developer",
-        timing: "12:00 - 13:00"),
-    InterviewModel(
-        name: 'Lee Chan',
-        avatarUrl: AppString.dummyImgUrl5,
-        isMale: false,
-        role: "Project Manager",
-        timing: "12:00 - 13:00"),
-    InterviewModel(
-        name: 'Meave Willey',
-        avatarUrl: AppString.dummyImgUrl6,
-        isMale: false,
-        role: "HR Manager",
-        timing: "12:00 - 13:00"),
-    InterviewModel(
-        name: 'Natelie Portman',
-        avatarUrl: AppString.dummyImgUrl4,
-        isMale: false,
-        role: "Delievery Lead",
-        timing: "12:00 - 13:00"),
   ];
 
   List<TopPerformerModel> topPerformerData = [
@@ -639,14 +601,22 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           height12(),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemCount: interviewData.length,
-            itemBuilder: (context, index) => HomeInterviewItem(
-                item: interviewData[index], isDesktop: isDesktop),
-            separatorBuilder: (context, index) => const Divider(),
-          ),
+          Consumer<HomeStore>(builder: (_, store, widget) {
+            return store.interviewList.isEmpty
+                ? Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemCount: store.interviewList.length,
+                    itemBuilder: (context, index) => HomeInterviewItem(
+                        item: store.interviewList[index], isDesktop: isDesktop),
+                    separatorBuilder: (context, index) => const Divider(),
+                  );
+          }),
           height12(),
         ],
       ),

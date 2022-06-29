@@ -6,8 +6,10 @@ import 'package:flutter_basics/utils/app_font_size.dart';
 import 'package:flutter_basics/utils/app_string.dart';
 import 'package:flutter_basics/utils/size_config.dart';
 
+import '../../db/database_repository.dart';
+
 class HomeInterviewItem extends StatelessWidget {
-  final InterviewModel item;
+  final Interview item;
   bool isDesktop;
 
   HomeInterviewItem({required this.item, required this.isDesktop});
@@ -27,7 +29,7 @@ class HomeInterviewItem extends StatelessWidget {
             backgroundColor: Colors.pinkAccent,
             radius: 24.0,
             child: CircleAvatar(
-              backgroundImage: NetworkImage(item.avatarUrl),
+              backgroundImage: NetworkImage(item.avatarUrl.toString()),
               radius: 22.0,
             ),
           ),

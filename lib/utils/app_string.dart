@@ -29,6 +29,9 @@ class AppString {
   static const shortLoremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
 
   static const nameHint = "eg. John Doe";
+  static const fillName = "Please fill name field";
+  static const fillAvatar = "Please fill avatar field";
+  static const fillCurrentRole = "Please select appropriate role";
   static const avatarUrlHint = "eg. https://xyz.com/my-avtar.png";
 
   static const robotDummyImgUrl = "https://icons.iconarchive.com/icons/diversity-avatars/avatars/1024/robot-01-icon.png";
