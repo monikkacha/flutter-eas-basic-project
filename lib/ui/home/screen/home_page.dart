@@ -8,6 +8,7 @@ import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
 import 'package:flutter_basics/ui/home/model/interview_model.dart';
 import 'package:flutter_basics/ui/home/model/stacked_column_model.dart';
 import 'package:flutter_basics/ui/home/model/toatal_employee_model.dart';
+import 'package:flutter_basics/ui/home/store/home_store.dart';
 import 'package:flutter_basics/ui_widgets/app_card/app_card.dart';
 import 'package:flutter_basics/ui_widgets/appbar/common_app_bar.dart';
 import 'package:flutter_basics/ui_widgets/home_interview_item/home_interview_item.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_basics/utils/app_font_size.dart';
 import 'package:flutter_basics/utils/app_string.dart';
 import 'package:flutter_basics/utils/size_config.dart';
 import 'package:my_popup_menu/my_popup_menu.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../ui_widgets/app_drawer/app_drawer.dart';
@@ -33,6 +35,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+  late HomeStore homeStore;
 
   final List<ChartDataModel> chartData = [
     ChartDataModel(2010, 35),
@@ -179,6 +182,7 @@ class _HomePageState extends State<HomePage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: AppColor.eastBay,
     ));
+    homeStore = Provider.of<HomeStore>(context, listen: false);
   }
 
   @override

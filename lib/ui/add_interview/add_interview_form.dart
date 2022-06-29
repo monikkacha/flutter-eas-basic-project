@@ -10,10 +10,10 @@ import '../../utils/app_string.dart';
 class AddInterviewForm extends StatefulWidget {
   bool isDesktop;
 
-  AddInterviewForm({this.isDesktop = false});
-
   @override
   State<AddInterviewForm> createState() => _AddInterviewFormState();
+
+  AddInterviewForm({this.isDesktop = false});
 }
 
 class _AddInterviewFormState extends State<AddInterviewForm> {

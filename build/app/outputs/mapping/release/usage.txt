@@ -8026,8 +8026,8 @@ androidx.core.app.ActivityCompat$RequestPermissionsRequestCodeValidator
 com.google.common.collect.ForwardingCollection
 com.google.common.util.concurrent.CycleDetectingLockFactory$CycleDetectingReentrantLock
 com.google.common.base.Functions$FunctionForMapNoDefault
-kotlinx.coroutines.test.TestCoroutineContext
 kotlinx.coroutines.Delay
+kotlinx.coroutines.test.TestCoroutineContext
 com.google.common.eventbus.package-info
 com.google.common.collect.MapMakerInternalMap$StrongKeyWeakValueEntry$Helper
 com.google.common.cache.LocalCache$AccessQueue$2
@@ -8611,8 +8611,8 @@ androidx.core.app.ServiceCompat
 kotlinx.coroutines.flow.FlowKt__BuildersKt$asFlow$$inlined$unsafeFlow$5
 kotlinx.coroutines.flow.FlowKt__ZipKt$combineUnsafe$$inlined$unsafeFlow$1
 kotlinx.coroutines.flow.FlowKt__ReduceKt$first$3
-kotlin.sequences.SequencesKt___SequencesKt$flatMap$2
 kotlin.reflect.TypesJVMKt
+kotlin.sequences.SequencesKt___SequencesKt$flatMap$2
 androidx.core.app.NotificationChannelGroupCompat
 kotlin.jvm.internal.ReflectionFactory:
     public kotlin.reflect.KClass createKotlinClass(java.lang.Class)
@@ -9708,8 +9708,8 @@ com.google.common.reflect.TypeResolver$TypeTable$1
 androidx.core.view.WindowInsetsAnimationCompat$Impl30$ProxyCallback
 kotlinx.coroutines.flow.FlowKt__ErrorsKt
 com.google.common.util.concurrent.ListenerCallQueue$PerListenerQueue
-kotlinx.coroutines.flow.FlowKt__MergeKt$flattenConcat$lambda-1$$inlined$collect$1
 kotlinx.coroutines.channels.TickerChannelsKt$ticker$3$WhenMappings
+kotlinx.coroutines.flow.FlowKt__MergeKt$flattenConcat$lambda-1$$inlined$collect$1
 kotlinx.coroutines.channels.ChannelsKt__DeprecatedKt$toCollection$1
 com.google.common.util.concurrent.ForwardingListeningExecutorService
 io.flutter.plugin.editing.InputConnectionAdaptor:
@@ -10486,8 +10486,8 @@ androidx.core.content.res.ResourcesCompat:
     private static final java.lang.ThreadLocal sTempTypedValue
     private static final java.util.WeakHashMap sColorStateCaches
     private static final java.lang.Object sColorStateCacheLock
-io.flutter.plugin.platform.PlatformView$-CC
 io.flutter.view.TextureRegistry$SurfaceTextureEntry$-CC
 io.flutter.plugin.common.BinaryMessenger$-CC:
     public static io.flutter.plugin.common.BinaryMessenger$TaskQueue $default$makeBackgroundTaskQueue(io.flutter.plugin.common.BinaryMessenger,io.flutter.plugin.common.BinaryMessenger$TaskQueueOptions)
     public static void $default$setMessageHandler(io.flutter.plugin.common.BinaryMessenger,java.lang.String,io.flutter.plugin.common.BinaryMessenger$BinaryMessageHandler,io.flutter.plugin.common.BinaryMessenger$TaskQueue)
+io.flutter.plugin.platform.PlatformView$-CC

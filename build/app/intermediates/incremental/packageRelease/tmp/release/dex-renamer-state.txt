@@ -1,4 +1,4 @@
-#Wed Jun 08 10:03:07 IST 2022
-base.0=/Users/monikkacha/Documents/workplace/mobile/flutter_basics/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+#Fri Jun 24 09:42:37 IST 2022
+base.0=/Users/monikkacha/Documents/workplace/flutter-eas-basic-project/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
