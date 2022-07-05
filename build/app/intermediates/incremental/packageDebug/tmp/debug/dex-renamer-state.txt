@@ -1,4 +1,4 @@
-#Wed Jun 29 17:20:59 IST 2022
+#Tue Jul 05 15:07:46 IST 2022
 base.0=/Users/monikkacha/Documents/workplace/flutter-eas-basic-project/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

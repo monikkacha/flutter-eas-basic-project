@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_basics/ui/add_interview/store/add_interview_store.dart';
 import 'package:flutter_basics/ui/home/screen/home_page.dart';
 import 'package:flutter_basics/ui/home/store/home_store.dart';
 import 'package:flutter_basics/utils/app_color.dart';
@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<HomeStore>(
           create: (context) => HomeStore(),
+        ),
+        ChangeNotifierProvider<AddInterviewStore>(
+          create: (context) => AddInterviewStore(),
         )
       ],
       child: MaterialApp(

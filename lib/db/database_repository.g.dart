@@ -9,6 +9,7 @@ part of 'database_repository.dart';
 // ignore_for_file: type=lint
 class Interview extends DataClass implements Insertable<Interview> {
   final int? id;
+  final int productivity;
   final String name;
   final String role;
   final String? avatarUrl;
@@ -16,6 +17,7 @@ class Interview extends DataClass implements Insertable<Interview> {
   final bool isMale;
   Interview(
       {this.id,
+      required this.productivity,
       required this.name,
       required this.role,
       this.avatarUrl,
@@ -25,6 +27,8 @@ class Interview extends DataClass implements Insertable<Interview> {
     final effectivePrefix = prefix ?? '';
     return Interview(
       id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      productivity: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}productivity'])!,
       name: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
       role: const StringType()
@@ -43,6 +47,7 @@ class Interview extends DataClass implements Insertable<Interview> {
     if (!nullToAbsent || id != null) {
       map['id'] = Variable<int?>(id);
     }
+    map['productivity'] = Variable<int>(productivity);
     map['name'] = Variable<String>(name);
     map['role'] = Variable<String>(role);
     if (!nullToAbsent || avatarUrl != null) {
@@ -56,6 +61,7 @@ class Interview extends DataClass implements Insertable<Interview> {
   InterviewsCompanion toCompanion(bool nullToAbsent) {
     return InterviewsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      productivity: Value(productivity),
       name: Value(name),
       role: Value(role),
       avatarUrl: avatarUrl == null && nullToAbsent
@@ -71,6 +77,7 @@ class Interview extends DataClass implements Insertable<Interview> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Interview(
       id: serializer.fromJson<int?>(json['id']),
+      productivity: serializer.fromJson<int>(json['productivity']),
       name: serializer.fromJson<String>(json['name']),
       role: serializer.fromJson<String>(json['role']),
       avatarUrl: serializer.fromJson<String?>(json['avatarUrl']),
@@ -83,6 +90,7 @@ class Interview extends DataClass implements Insertable<Interview> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int?>(id),
+      'productivity': serializer.toJson<int>(productivity),
       'name': serializer.toJson<String>(name),
       'role': serializer.toJson<String>(role),
       'avatarUrl': serializer.toJson<String?>(avatarUrl),
@@ -93,6 +101,7 @@ class Interview extends DataClass implements Insertable<Interview> {
 
   Interview copyWith(
           {int? id,
+          int? productivity,
           String? name,
           String? role,
           String? avatarUrl,
@@ -100,6 +109,7 @@ class Interview extends DataClass implements Insertable<Interview> {
           bool? isMale}) =>
       Interview(
         id: id ?? this.id,
+        productivity: productivity ?? this.productivity,
         name: name ?? this.name,
         role: role ?? this.role,
         avatarUrl: avatarUrl ?? this.avatarUrl,
@@ -110,6 +120,7 @@ class Interview extends DataClass implements Insertable<Interview> {
   String toString() {
     return (StringBuffer('Interview(')
           ..write('id: $id, ')
+          ..write('productivity: $productivity, ')
           ..write('name: $name, ')
           ..write('role: $role, ')
           ..write('avatarUrl: $avatarUrl, ')
@@ -120,12 +131,14 @@ class Interview extends DataClass implements Insertable<Interview> {
   }
 
   @override
-  int get hashCode => Object.hash(id, name, role, avatarUrl, timing, isMale);
+  int get hashCode =>
+      Object.hash(id, productivity, name, role, avatarUrl, timing, isMale);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Interview &&
           other.id == this.id &&
+          other.productivity == this.productivity &&
           other.name == this.name &&
           other.role == this.role &&
           other.avatarUrl == this.avatarUrl &&
@@ -135,6 +148,7 @@ class Interview extends DataClass implements Insertable<Interview> {
 
 class InterviewsCompanion extends UpdateCompanion<Interview> {
   final Value<int?> id;
+  final Value<int> productivity;
   final Value<String> name;
   final Value<String> role;
   final Value<String?> avatarUrl;
@@ -142,6 +156,7 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
   final Value<bool> isMale;
   const InterviewsCompanion({
     this.id = const Value.absent(),
+    this.productivity = const Value.absent(),
     this.name = const Value.absent(),
     this.role = const Value.absent(),
     this.avatarUrl = const Value.absent(),
@@ -150,16 +165,19 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
   });
   InterviewsCompanion.insert({
     this.id = const Value.absent(),
+    required int productivity,
     required String name,
     required String role,
     this.avatarUrl = const Value.absent(),
     required String timing,
     this.isMale = const Value.absent(),
-  })  : name = Value(name),
+  })  : productivity = Value(productivity),
+        name = Value(name),
         role = Value(role),
         timing = Value(timing);
   static Insertable<Interview> custom({
     Expression<int?>? id,
+    Expression<int>? productivity,
     Expression<String>? name,
     Expression<String>? role,
     Expression<String?>? avatarUrl,
@@ -168,6 +186,7 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (productivity != null) 'productivity': productivity,
       if (name != null) 'name': name,
       if (role != null) 'role': role,
       if (avatarUrl != null) 'avatar_url': avatarUrl,
@@ -178,6 +197,7 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
 
   InterviewsCompanion copyWith(
       {Value<int?>? id,
+      Value<int>? productivity,
       Value<String>? name,
       Value<String>? role,
       Value<String?>? avatarUrl,
@@ -185,6 +205,7 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
       Value<bool>? isMale}) {
     return InterviewsCompanion(
       id: id ?? this.id,
+      productivity: productivity ?? this.productivity,
       name: name ?? this.name,
       role: role ?? this.role,
       avatarUrl: avatarUrl ?? this.avatarUrl,
@@ -198,6 +219,9 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int?>(id.value);
+    }
+    if (productivity.present) {
+      map['productivity'] = Variable<int>(productivity.value);
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
@@ -221,6 +245,7 @@ class InterviewsCompanion extends UpdateCompanion<Interview> {
   String toString() {
     return (StringBuffer('InterviewsCompanion(')
           ..write('id: $id, ')
+          ..write('productivity: $productivity, ')
           ..write('name: $name, ')
           ..write('role: $role, ')
           ..write('avatarUrl: $avatarUrl, ')
@@ -244,6 +269,12 @@ class $InterviewsTable extends Interviews
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _productivityMeta =
+      const VerificationMeta('productivity');
+  @override
+  late final GeneratedColumn<int?> productivity = GeneratedColumn<int?>(
+      'productivity', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
@@ -280,7 +311,7 @@ class $InterviewsTable extends Interviews
       defaultValue: const Constant(true));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, role, avatarUrl, timing, isMale];
+      [id, productivity, name, role, avatarUrl, timing, isMale];
   @override
   String get aliasedName => _alias ?? 'interviews';
   @override
@@ -292,6 +323,14 @@ class $InterviewsTable extends Interviews
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('productivity')) {
+      context.handle(
+          _productivityMeta,
+          productivity.isAcceptableOrUnknown(
+              data['productivity']!, _productivityMeta));
+    } else if (isInserting) {
+      context.missing(_productivityMeta);
     }
     if (data.containsKey('name')) {
       context.handle(

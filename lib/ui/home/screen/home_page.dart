@@ -2,8 +2,8 @@ import 'package:avatar_stack/avatar_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_basics/db/database_repository.dart';
-import 'package:flutter_basics/ui/add_interview/add_interview_form.dart';
-import 'package:flutter_basics/ui/add_interview/add_interview_page.dart';
+import 'package:flutter_basics/ui/add_interview/screen/add_interview_form.dart';
+import 'package:flutter_basics/ui/add_interview/screen/add_interview_page.dart';
 import 'package:flutter_basics/ui/home/model/char_data_model.dart';
 import 'package:flutter_basics/ui/home/model/employee_availability_model.dart';
 import 'package:flutter_basics/ui/home/model/interview_model.dart';
@@ -145,6 +145,7 @@ class _HomePageState extends State<HomePage> {
       statusBarColor: AppColor.eastBay,
     ));
     homeStore = Provider.of<HomeStore>(context, listen: false);
+    homeStore.getData();
   }
 
   @override
@@ -613,11 +614,37 @@ class _HomePageState extends State<HomePage> {
                     physics: const ScrollPhysics(),
                     itemCount: store.interviewList.length,
                     itemBuilder: (context, index) => HomeInterviewItem(
-                        item: store.interviewList[index], isDesktop: isDesktop),
+                        onDeletePressed: () {
+                          store.deleteInterview(index , store.interviewList[index].id!);
+                        },
+                        onEditPressed: () {
+                          if (isDesktop) {
+                            // TODO :: implement edit here
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddInterviewPage(
+                                          interview: store.interviewList[index],
+                                        )));
+                          }
+                        },
+                        item: store.interviewList[index],
+                        isDesktop: isDesktop),
                     separatorBuilder: (context, index) => const Divider(),
                   );
           }),
-          height12(),
+          // TODO :: for pagination
+          // TextButton(
+          //     onPressed: () {
+          //       homeStore.getData();
+          //     },
+          //     child: Center(
+          //       child: Text(
+          //         "LOAD MORE",
+          //         textAlign: TextAlign.center,
+          //       ),
+          //     )),
         ],
       ),
       onTap: () {});
@@ -779,4 +806,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ]),
           ));
+
+  @override
+  void dispose() {
+    homeStore.dispose();
+  }
 }

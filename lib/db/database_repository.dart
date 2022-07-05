@@ -10,6 +10,8 @@ part 'database_repository.g.dart';
 class Interviews extends Table {
   IntColumn get id => integer().nullable().autoIncrement()();
 
+  IntColumn get productivity => integer()();
+
   TextColumn get name => text().withLength(min: 3, max: 30)();
 
   TextColumn get role => text().withLength(min: 3, max: 30)();
@@ -23,12 +25,16 @@ class Interviews extends Table {
 
 @DriftDatabase(tables: [Interviews])
 class DataBase extends _$DataBase {
+  static final DataBase instance = DataBase();
+
   DataBase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
 
-  Future<List<Interview>> get allTodoEntries => select(interviews).get();
+  Future<List<Interview>> allTodoEntries() {
+    return select(interviews).get();
+  }
 
   MultiSelectable<Interview> pageOfInterviews(int page, {int pageSize = 6}) {
     return select(interviews)..limit(pageSize, offset: page);
@@ -43,7 +49,8 @@ class DataBase extends _$DataBase {
   }
 
   Future deleteInterviews(Interview entry) {
-    return (delete(interviews)..where((i) => Constant(i.id == entry.id))).go();
+    // return (delete(interviews)..where((i) => Constant(i.id == id))).go();
+    return delete(interviews).delete(entry);
   }
 }
 

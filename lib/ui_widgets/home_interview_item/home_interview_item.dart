@@ -11,8 +11,14 @@ import '../../db/database_repository.dart';
 class HomeInterviewItem extends StatelessWidget {
   final Interview item;
   bool isDesktop;
+  VoidCallback onDeletePressed;
+  VoidCallback onEditPressed;
 
-  HomeInterviewItem({required this.item, required this.isDesktop});
+  HomeInterviewItem(
+      {required this.item,
+      required this.isDesktop,
+      required this.onDeletePressed,
+      required this.onEditPressed});
 
   List<InterviewPopupModel> interviewPopupMode = [
     InterviewPopupModel(icon: Icons.edit, label: AppString.edit),
@@ -102,8 +108,10 @@ class HomeInterviewItem extends StatelessWidget {
   void handleClick(String value) {
     switch (value) {
       case AppString.edit:
+        this.onEditPressed();
         break;
       case AppString.delete:
+        this.onDeletePressed();
         break;
     }
   }
